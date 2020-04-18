@@ -1,0 +1,14 @@
+{
+  "name": "vending-machine",
+  "version": "1.0.0",
+  "description": "Kata for a vending machine",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "MOB",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^25.3.0"
+  }
+}
