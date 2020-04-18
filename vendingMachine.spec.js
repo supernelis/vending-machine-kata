@@ -6,6 +6,7 @@ describe("accept coin", () => {
     it("displays INSERT COIN on startup", () => {
         const display = jest.fn();
         const vendingMachine = new VendingMachine(display);
+
         expect(display).toHaveBeenCalledWith("INSERT COIN");
     });
 
@@ -13,7 +14,7 @@ describe("accept coin", () => {
         const display = jest.fn();
         const vendingMachine = new VendingMachine(display);
 
-        vendingMachine.insertCoin();
+        vendingMachine.insertCoin(5.0);
 
         expect(display).toHaveBeenCalledWith("$ 0.05");
     });
@@ -26,7 +27,7 @@ class VendingMachine {
         this._display = display;
     }
 
-    insertCoin() {
+    insertCoin(weight) {
         this._display("$ 0.05");
     }
 }
