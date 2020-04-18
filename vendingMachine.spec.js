@@ -4,6 +4,10 @@
 
 describe("accept coin", () => {
 
+    const nickelWeight = 5.0;
+    const dimeWeight = 2.268;
+    const quarterWeight = 5.670;
+
     let display, vendingMachine;
 
     beforeEach(() => {
@@ -16,19 +20,19 @@ describe("accept coin", () => {
     });
 
     it("displays the value of a nickel when inserted", () => {
-        vendingMachine.insertCoin(5.0);
+        vendingMachine.insertCoin(nickelWeight);
 
         expect(display).toHaveBeenCalledWith("$ 0.05");
     });
 
     it("displays the value of a dime when inserted", () => {
-        vendingMachine.insertCoin(2.268);
+        vendingMachine.insertCoin(dimeWeight);
 
         expect(display).toHaveBeenCalledWith("$ 0.10");
     });
 
     it("displays the value of a quarter when inserted", () => {
-        vendingMachine.insertCoin(5.670);
+        vendingMachine.insertCoin(quarterWeight);
 
         expect(display).toHaveBeenCalledWith("$ 0.25");
     });
