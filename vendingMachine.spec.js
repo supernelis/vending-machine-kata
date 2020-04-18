@@ -6,7 +6,7 @@ describe("accept coin", () => {
 
     let display, vendingMachine;
 
-    beforeEach (() => {
+    beforeEach(() => {
         display = jest.fn();
         vendingMachine = new VendingMachine(display);
     });
@@ -26,10 +26,16 @@ describe("accept coin", () => {
 
         expect(display).toHaveBeenCalledWith("$ 0.10");
     });
+
+    it("displays the value of a quarter when inserted", () => {
+        vendingMachine.insertCoin(5.670);
+
+        expect(display).toHaveBeenCalledWith("$ 0.25");
+    });
 });
 
 class VendingMachine {
-    
+
     constructor(display) {
         display("INSERT COIN");
         this._display = display;
@@ -38,7 +44,9 @@ class VendingMachine {
     insertCoin(weight) {
         if (weight === 5.0) {
             this._display("$ 0.05");
-        }else {
+        } else if (weight === 5.670) {
+            this._display("$ 0.25");
+        } else {
             this._display("$ 0.10");
         }
     }
