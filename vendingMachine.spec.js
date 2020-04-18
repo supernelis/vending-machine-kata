@@ -3,26 +3,25 @@
 "use strict";
 
 describe("accept coin", () => {
-    it("displays INSERT COIN on startup", () => {
-        const display = jest.fn();
-        const vendingMachine = new VendingMachine(display);
 
+    let display, vendingMachine;
+
+    beforeEach (() => {
+        display = jest.fn();
+        vendingMachine = new VendingMachine(display);
+    });
+
+    it("displays INSERT COIN on startup", () => {
         expect(display).toHaveBeenCalledWith("INSERT COIN");
     });
 
-    it("displays the value of a nickel when it's inserted", () => {
-        const display = jest.fn();
-        const vendingMachine = new VendingMachine(display);
-
+    it("displays the value of a nickel when inserted", () => {
         vendingMachine.insertCoin(5.0);
 
         expect(display).toHaveBeenCalledWith("$ 0.05");
     });
 
-    it("display the value of a dime when inserted", () => {
-        const display = jest.fn();
-        const vendingMachine = new VendingMachine(display);
-
+    it("displays the value of a dime when inserted", () => {
         vendingMachine.insertCoin(2.268);
 
         expect(display).toHaveBeenCalledWith("$ 0.10");
