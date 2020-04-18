@@ -18,6 +18,15 @@ describe("accept coin", () => {
 
         expect(display).toHaveBeenCalledWith("$ 0.05");
     });
+
+    it("display the value of a dime when inserted", () => {
+        const display = jest.fn();
+        const vendingMachine = new VendingMachine(display);
+
+        vendingMachine.insertCoin(2.268);
+
+        expect(display).toHaveBeenCalledWith("$ 0.10");
+    });
 });
 
 class VendingMachine {
@@ -28,6 +37,10 @@ class VendingMachine {
     }
 
     insertCoin(weight) {
-        this._display("$ 0.05");
+        if (weight === 5.0) {
+            this._display("$ 0.05");
+        }else {
+            this._display("$ 0.10");
+        }
     }
 }
