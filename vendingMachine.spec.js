@@ -8,11 +8,12 @@ describe("accept coin", () => {
     const dimeWeight = 2.268;
     const quarterWeight = 5.670;
 
-    let display, vendingMachine;
+    let display, returnCoin, vendingMachine;
 
     beforeEach(() => {
         display = jest.fn();
-        vendingMachine = new VendingMachine(display);
+        returnCoin = jest.fn();
+        vendingMachine = new VendingMachine(display, returnCoin);
     });
 
     it("displays INSERT COIN on startup", () => {
@@ -36,13 +37,21 @@ describe("accept coin", () => {
 
         expect(display).toHaveBeenCalledWith("$ 0.25");
     });
+
+    it("rejects invalid coins", () => {
+        vendingMachine.insertCoin(123.45);
+
+        expect(returnCoin).toBeCalled();
+        expect(display).toBeCalledTimes(1);
+    });
 });
 
 class VendingMachine {
 
-    constructor(display) {
+    constructor(display, returnCoin) {
         display("INSERT COIN");
         this._display = display;
+        this._returnCoin = returnCoin;
     }
 
     insertCoin(weight) {
@@ -50,8 +59,10 @@ class VendingMachine {
             this._display("$ 0.05");
         } else if (weight === 5.670) {
             this._display("$ 0.25");
-        } else {
+        } else if (weight === 2.268) {
             this._display("$ 0.10");
+        } else {
+            this._returnCoin();
         }
     }
 }
