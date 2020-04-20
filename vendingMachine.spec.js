@@ -60,6 +60,15 @@ describe("accept coin", () => {
     });
 });
 
+describe("Select product", () => {
+
+    it("displays $1.00 when cola is selected without adding money", () => {
+        vendingMachine.selectProduct1();
+
+        expect(display).toHaveBeenCalledWith("PRICE $ 1.00");
+    });
+});
+
 const nickel = {
     weight: 5.0,
     amount: 0.05
@@ -98,5 +107,7 @@ class VendingMachine {
         }
     }
 
-
+    selectProduct1(){
+        this._display("PRICE $ 1.00");
+    }
 }
