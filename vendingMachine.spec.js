@@ -74,6 +74,10 @@ const quarter = {
     weight: 5.670,
     amount: 0.25
 };
+
+const coins = [nickel, dime, quarter];
+const isValidCoin = (coin) => coin;
+
 class VendingMachine {
 
     constructor(display, returnCoin) {
@@ -84,14 +88,10 @@ class VendingMachine {
     }
 
     insertCoin(weight) {
-        if (weight === nickel.weight) {
-            this._currentAmount += nickel.amount;
-            this._display(`$ ${this._currentAmount.toFixed(2)}`);
-        } else if (weight === quarter.weight) {
-            this._currentAmount += quarter.amount;
-            this._display(`$ ${this._currentAmount.toFixed(2)}`);
-        } else if (weight === dime.weight) {
-            this._currentAmount += dime.amount;
+        const coin = coins.find((c) => c.weight == weight);
+
+        if (isValidCoin(coin)) {
+            this._currentAmount += coin.amount;
             this._display(`$ ${this._currentAmount.toFixed(2)}`);
         } else {
             this._returnCoin();
