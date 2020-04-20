@@ -38,10 +38,15 @@ describe("accept coin", () => {
         expect(display).toHaveBeenCalledWith("$ 0.25");
     });
 
-    it("rejects invalid coins", () => {
+    it("returns invalid coins", () => {
         vendingMachine.insertCoin(123.45);
 
         expect(returnCoin).toBeCalled();
+    });
+
+    it("doesn't update the display when an invalid coin is inserted", () => {
+        vendingMachine.insertCoin(123.45);
+
         expect(display).toBeCalledTimes(1);
     });
 });
