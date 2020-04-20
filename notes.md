@@ -1,4 +1,5 @@
 npm test -- --watch-all
+git commit -a --amend --no-edit
 
 Nickel = 5g
 Dime = 2.268 g
@@ -21,3 +22,16 @@ Retro day1:
   * Design and direction went smooth
   * Small MOB works very well (3)
   * Not to strict roles, but still kept (for small MOB)
+
+Retro day2:
+
+* What did you learn?
+  * Git command refresh +1
+  * Handle the timeout
+  * Javascript (private function) +1
+  * Behavior? 2 expectations...
+
+* What went well?
+  * Smaller steps, stick with process
+  * Refactoring phase -> discuss approaches and then try one, small discussions
+  * Discussions are good
