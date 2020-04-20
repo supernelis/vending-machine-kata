@@ -98,6 +98,7 @@ const quarter = {
 
 const coins = [nickel, dime, quarter];
 const isValidCoin = (coin) => coin;
+const formatAmount = (amount) => `$ ${amount.toFixed(2)}`;
 
 class VendingMachine {
 
@@ -113,7 +114,7 @@ class VendingMachine {
 
         if (isValidCoin(coin)) {
             this._currentAmount += coin.amount;
-            this._display(`$ ${this._currentAmount.toFixed(2)}`);
+            this._display(formatAmount(this._currentAmount));
         } else {
             this._returnCoin();
         }
@@ -122,7 +123,7 @@ class VendingMachine {
     selectProduct1() {
         this._display("PRICE $ 1.00");
         const message = this._currentAmount > 0
-         ? `$ ${this._currentAmount.toFixed(2)}` 
+         ? formatAmount(this._currentAmount) 
          : "INSERT COIN";
         setTimeout(() => this._display(message), 3000);
     }
