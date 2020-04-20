@@ -50,6 +50,14 @@ describe("accept coin", () => {
 
         expect(display).toBeCalledTimes(1);
     });
+
+    it("displays current amount of inserted coins", () => {
+        vendingMachine.insertCoin(quarterWeight);
+        vendingMachine.insertCoin(dimeWeight);
+        vendingMachine.insertCoin(nickelWeight);
+
+        expect(display).toHaveBeenCalledWith("$ 0.40");
+    });
 });
 
 class VendingMachine {
@@ -58,15 +66,19 @@ class VendingMachine {
         display("INSERT COIN");
         this._display = display;
         this._returnCoin = returnCoin;
+        this._currentAmount = 0;
     }
 
     insertCoin(weight) {
         if (weight === 5.0) {
-            this._display("$ 0.05");
+            this._currentAmount += 0.05;
+            this._display(`$ ${this._currentAmount.toFixed(2)}`);
         } else if (weight === 5.670) {
-            this._display("$ 0.25");
+            this._currentAmount += 0.25;
+            this._display(`$ ${this._currentAmount.toFixed(2)}`);
         } else if (weight === 2.268) {
-            this._display("$ 0.10");
+            this._currentAmount += 0.10;
+            this._display(`$ ${this._currentAmount.toFixed(2)}`);
         } else {
             this._returnCoin();
         }
