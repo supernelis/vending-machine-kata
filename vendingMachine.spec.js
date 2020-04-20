@@ -70,6 +70,16 @@ describe("Select product", () => {
         expect(display).toHaveBeenCalledWith("PRICE $ 1.00");
         expect(display).toHaveBeenLastCalledWith("INSERT COIN");
     });
+
+    it("displays $1.00 and then the current amount when cola is selected and inserted amount is insufficient", () => {
+        window.setTimeout = (callback) => callback();
+        vendingMachine.insertCoin(nickelWeight);
+
+        vendingMachine.selectProduct1();
+
+        expect(display).toHaveBeenCalledWith("PRICE $ 1.00");
+        expect(display).toHaveBeenLastCalledWith("$ 0.05");
+    });
 });
 
 const nickel = {
@@ -113,7 +123,11 @@ class VendingMachine {
     selectProduct1() {
         this._display("PRICE $ 1.00");
         setTimeout(() => {
-            this._display("INSERT COIN");
+            if (this._currentAmount > 0) {
+                this._display(`$ ${this._currentAmount.toFixed(2)}`);     
+            } else {
+                this._display("INSERT COIN");
+            }
         }, 3000);
     }
 }
