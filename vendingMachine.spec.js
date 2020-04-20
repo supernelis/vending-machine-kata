@@ -2,20 +2,20 @@
 // Matteo, Nelis, Saket
 "use strict";
 
+const nickelWeight = 5.0;
+const dimeWeight = 2.268;
+const quarterWeight = 5.670;
+const invalidWeight = 123.45;
+
+let display, returnCoin, vendingMachine;
+
+beforeEach(() => {
+    display = jest.fn();
+    returnCoin = jest.fn();
+    vendingMachine = new VendingMachine(display, returnCoin);
+});
+
 describe("accept coin", () => {
-
-    const nickelWeight = 5.0;
-    const dimeWeight = 2.268;
-    const quarterWeight = 5.670;
-    const invalidWeight = 123.45;
-
-    let display, returnCoin, vendingMachine;
-
-    beforeEach(() => {
-        display = jest.fn();
-        returnCoin = jest.fn();
-        vendingMachine = new VendingMachine(display, returnCoin);
-    });
 
     it("displays INSERT COIN on startup", () => {
         expect(display).toHaveBeenCalledWith("INSERT COIN");
@@ -97,4 +97,6 @@ class VendingMachine {
             this._returnCoin();
         }
     }
+
+
 }
