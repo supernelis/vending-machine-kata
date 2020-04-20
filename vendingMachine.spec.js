@@ -62,9 +62,9 @@ describe("accept coin", () => {
 
 describe("Select product", () => {
 
-    it("displays $1.00 when cola is selected without adding money", () => {
-        window.setTimeout = (callback) => callback();
+    window.setTimeout = (callback) => callback();
 
+    it("displays $1.00 when cola is selected without adding money", () => {
         vendingMachine.selectProduct1();
 
         expect(display).toHaveBeenCalledWith("PRICE $ 1.00");
@@ -72,7 +72,6 @@ describe("Select product", () => {
     });
 
     it("displays $1.00 and then the current amount when cola is selected and inserted amount is insufficient", () => {
-        window.setTimeout = (callback) => callback();
         vendingMachine.insertCoin(nickelWeight);
 
         vendingMachine.selectProduct1();
@@ -122,12 +121,9 @@ class VendingMachine {
 
     selectProduct1() {
         this._display("PRICE $ 1.00");
-        setTimeout(() => {
-            if (this._currentAmount > 0) {
-                this._display(`$ ${this._currentAmount.toFixed(2)}`);     
-            } else {
-                this._display("INSERT COIN");
-            }
-        }, 3000);
+        const message = this._currentAmount > 0
+         ? `$ ${this._currentAmount.toFixed(2)}` 
+         : "INSERT COIN";
+        setTimeout(() => this._display(message), 3000);
     }
 }
