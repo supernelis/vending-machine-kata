@@ -63,9 +63,12 @@ describe("accept coin", () => {
 describe("Select product", () => {
 
     it("displays $1.00 when cola is selected without adding money", () => {
+        window.setTimeout = (callback) => callback();
+
         vendingMachine.selectProduct1();
 
         expect(display).toHaveBeenCalledWith("PRICE $ 1.00");
+        expect(display).toHaveBeenLastCalledWith("INSERT COIN");
     });
 });
 
@@ -107,7 +110,10 @@ class VendingMachine {
         }
     }
 
-    selectProduct1(){
+    selectProduct1() {
         this._display("PRICE $ 1.00");
+        setTimeout(() => {
+            this._display("INSERT COIN");
+        }, 3000);
     }
 }
