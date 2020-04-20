@@ -7,6 +7,7 @@ describe("accept coin", () => {
     const nickelWeight = 5.0;
     const dimeWeight = 2.268;
     const quarterWeight = 5.670;
+    const invalidWeight = 123.45;
 
     let display, returnCoin, vendingMachine;
 
@@ -39,13 +40,13 @@ describe("accept coin", () => {
     });
 
     it("returns invalid coins", () => {
-        vendingMachine.insertCoin(123.45);
+        vendingMachine.insertCoin(invalidWeight);
 
         expect(returnCoin).toBeCalled();
     });
 
     it("doesn't update the display when an invalid coin is inserted", () => {
-        vendingMachine.insertCoin(123.45);
+        vendingMachine.insertCoin(invalidWeight);
 
         expect(display).toBeCalledTimes(1);
     });
