@@ -60,6 +60,20 @@ describe("accept coin", () => {
     });
 });
 
+const nickel = {
+    weight: 5.0,
+    amount: 0.05
+};
+
+const dime = {
+    weight: 2.268,
+    amount: 0.10
+};
+
+const quarter = {
+    weight: 5.670,
+    amount: 0.25
+};
 class VendingMachine {
 
     constructor(display, returnCoin) {
@@ -70,14 +84,14 @@ class VendingMachine {
     }
 
     insertCoin(weight) {
-        if (weight === 5.0) {
-            this._currentAmount += 0.05;
+        if (weight === nickel.weight) {
+            this._currentAmount += nickel.amount;
             this._display(`$ ${this._currentAmount.toFixed(2)}`);
-        } else if (weight === 5.670) {
-            this._currentAmount += 0.25;
+        } else if (weight === quarter.weight) {
+            this._currentAmount += quarter.amount;
             this._display(`$ ${this._currentAmount.toFixed(2)}`);
-        } else if (weight === 2.268) {
-            this._currentAmount += 0.10;
+        } else if (weight === dime.weight) {
+            this._currentAmount += dime.amount;
             this._display(`$ ${this._currentAmount.toFixed(2)}`);
         } else {
             this._returnCoin();
