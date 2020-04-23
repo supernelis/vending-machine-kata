@@ -12,7 +12,8 @@ let display, returnCoin, machine, dispenser;
 beforeEach(() => {
     dispenser = {
         dispense1: jest.fn(),
-        dispense2: jest.fn()
+        dispense2: jest.fn(),
+        dispense3: jest.fn()
     };
     display = jest.fn();
     returnCoin = jest.fn();
@@ -130,6 +131,17 @@ describe("Select product", () => {
 
         expect(dispenser.dispense2).toHaveBeenCalled();
     });
+
+    it("dispenses candy after successful selection", () => {
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(dimeWeight);
+        machine.insertCoin(nickelWeight);
+
+        machine.selectProduct3();
+
+        expect(dispenser.dispense3).toHaveBeenCalled();
+    });
 });
 
 function vendingMachine(display, returnCoin, dispenser) {
@@ -205,6 +217,14 @@ function vendingMachine(display, returnCoin, dispenser) {
                 tray: dispenser.dispense2
             };
             select(chips);
+        },
+
+        selectProduct3: () => {
+            const candy = {
+                price: 0.65,
+                tray: dispenser.dispense3
+            };
+            select(candy);
         }
     };
 }
