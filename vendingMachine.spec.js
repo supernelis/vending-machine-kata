@@ -141,17 +141,15 @@ const coins = [nickel, dime, quarter];
 const isValidCoin = (coin) => coin;
 const formatAmount = (amount) => `$ ${amount.toFixed(2)}`;
 
-class VendingMachine {
+function VendingMachine(display, returnCoin, dispenser) {
 
-    constructor(display, returnCoin, dispenser) {
-        display("INSERT COIN");
-        this._display = display;
-        this._returnCoin = returnCoin;
-        this._currentAmount = 0;
-        this._dispenser = dispenser;
-    }
+    display("INSERT COIN");
+    this._display = display;
+    this._returnCoin = returnCoin;
+    this._currentAmount = 0;
+    this._dispenser = dispenser;
 
-    insertCoin(weight) {
+    this.insertCoin = (weight) => {
         const coin = coins.find((c) => c.weight == weight);
 
         if (isValidCoin(coin)) {
@@ -162,7 +160,7 @@ class VendingMachine {
         }
     }
 
-    selectProduct1() {
+    this.selectProduct1 = () => {
         if (this._currentAmount >= 1.0) {
             dispense(this);
         } else {
