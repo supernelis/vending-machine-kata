@@ -156,6 +156,14 @@ function vendingMachine(display, returnCoin, dispenser) {
     display("INSERT COIN");
     let currentAmount = 0;
 
+    function select(product) {
+        if (currentAmount >= product.price) {
+            dispense(product.tray);
+        } else {
+            reject();
+        }
+    }
+
     function dispense(tray) {
         display("THANK YOU");
         currentAmount = 0;
@@ -188,11 +196,7 @@ function vendingMachine(display, returnCoin, dispenser) {
                 price: 1.0,
                 tray: dispenser.dispense1
             };
-            if (currentAmount >= cola.price) {
-                dispense(cola.tray);
-            } else {
-                reject();
-            }
+            select(cola);
         },
 
         selectProduct2: () => {
@@ -200,11 +204,7 @@ function vendingMachine(display, returnCoin, dispenser) {
                 price: 0.5,
                 tray: dispenser.dispense2
             };
-            if (currentAmount >= chips.price) {
-                dispense(chips.tray);
-            } else {
-                reject();
-            }
+            select(chips);
         }
     };
 }
