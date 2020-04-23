@@ -7,12 +7,15 @@ const dimeWeight = 2.268;
 const quarterWeight = 5.670;
 const invalidWeight = 123.45;
 
-let display, returnCoin, vendingMachine;
+let display, returnCoin, vendingMachine, dispenser;
 
 beforeEach(() => {
+    dispenser = {
+        dispense1 : jest.fn()
+    };
     display = jest.fn();
     returnCoin = jest.fn();
-    vendingMachine = new VendingMachine(display, returnCoin);
+    vendingMachine = new VendingMachine(display, returnCoin, dispenser);
 });
 
 describe("accept coin", () => {
@@ -91,6 +94,17 @@ describe("Select product", () => {
         expect(display).toHaveBeenCalledWith("THANK YOU");
         expect(display).toHaveBeenLastCalledWith("INSERT COIN");
     });
+
+    it("dispenses a coke after successfull selection", () => {
+        vendingMachine.insertCoin(quarterWeight);
+        vendingMachine.insertCoin(quarterWeight);
+        vendingMachine.insertCoin(quarterWeight);
+        vendingMachine.insertCoin(quarterWeight);
+
+        vendingMachine.selectProduct1();
+
+        expect(dispenser.dispense1).toHaveBeenCalled();
+    });
 });
 
 const nickel = {
@@ -114,11 +128,12 @@ const formatAmount = (amount) => `$ ${amount.toFixed(2)}`;
 
 class VendingMachine {
 
-    constructor(display, returnCoin) {
+    constructor(display, returnCoin, dispenser) {
         display("INSERT COIN");
         this._display = display;
         this._returnCoin = returnCoin;
         this._currentAmount = 0;
+        this._dispenser = dispenser;
     }
 
     insertCoin(weight) {
@@ -135,6 +150,7 @@ class VendingMachine {
     selectProduct1() {
         if (this._currentAmount >= 1.0) {
             this._display("THANK YOU");
+            this._dispenser.dispense1();
             setTimeout(() => this._display("INSERT COIN"), 3000);
         } else {
             this._display("PRICE $ 1.00");
