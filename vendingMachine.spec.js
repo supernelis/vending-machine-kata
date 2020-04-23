@@ -144,7 +144,6 @@ const formatAmount = (amount) => `$ ${amount.toFixed(2)}`;
 function VendingMachine(display, returnCoin, dispenser) {
 
     display("INSERT COIN");
-    this._display = display;
     this._currentAmount = 0;
     this._dispenser = dispenser;
 
@@ -153,7 +152,7 @@ function VendingMachine(display, returnCoin, dispenser) {
 
         if (isValidCoin(coin)) {
             this._currentAmount += coin.amount;
-            this._display(formatAmount(this._currentAmount));
+            display(formatAmount(this._currentAmount));
         } else {
             returnCoin();
         }
@@ -168,17 +167,17 @@ function VendingMachine(display, returnCoin, dispenser) {
     }
 
     function dispense(vm) {
-        vm._display("THANK YOU");
+        display("THANK YOU");
         vm._currentAmount = 0;
         vm._dispenser.dispense1();
-        setTimeout(() => vm._display("INSERT COIN"), 3000);
+        setTimeout(() => display("INSERT COIN"), 3000);
     }
 
     function reject(vm) {
-        vm._display("PRICE $ 1.00");
+        display("PRICE $ 1.00");
         const message = vm._currentAmount > 0
             ? formatAmount(vm._currentAmount)
             : "INSERT COIN";
-        setTimeout(() => vm._display(message), 3000);
+        setTimeout(() => display(message), 3000);
     }
 }
