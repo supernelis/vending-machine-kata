@@ -122,26 +122,27 @@ describe("Select product", () => {
     });
 });
 
-const nickel = {
-    weight: 5.0,
-    amount: 0.05
-};
-
-const dime = {
-    weight: 2.268,
-    amount: 0.10
-};
-
-const quarter = {
-    weight: 5.670,
-    amount: 0.25
-};
-
-const coins = [nickel, dime, quarter];
-const isValidCoin = (coin) => coin;
-const formatAmount = (amount) => `$ ${amount.toFixed(2)}`;
-
 function VendingMachine(display, returnCoin, dispenser) {
+
+    const nickel = {
+        weight: 5.0,
+        amount: 0.05
+    };
+
+    const dime = {
+        weight: 2.268,
+        amount: 0.10
+    };
+
+    const quarter = {
+        weight: 5.670,
+        amount: 0.25
+    };
+
+    const coins = [nickel, dime, quarter];
+    const isValidCoin = (coin) => coin;
+    const formatAmount = (amount) => `$ ${amount.toFixed(2)}`;
+
 
     display("INSERT COIN");
     let currentAmount = 0;
