@@ -144,21 +144,21 @@ const formatAmount = (amount) => `$ ${amount.toFixed(2)}`;
 function VendingMachine(display, returnCoin, dispenser) {
 
     display("INSERT COIN");
-    this._currentAmount = 0;
+    let currentAmount = 0;
 
     this.insertCoin = (weight) => {
         const coin = coins.find((c) => c.weight == weight);
 
         if (isValidCoin(coin)) {
-            this._currentAmount += coin.amount;
-            display(formatAmount(this._currentAmount));
+            currentAmount += coin.amount;
+            display(formatAmount(currentAmount));
         } else {
             returnCoin();
         }
     }
 
     this.selectProduct1 = () => {
-        if (this._currentAmount >= 1.0) {
+        if (currentAmount >= 1.0) {
             dispense(this);
         } else {
             reject(this);
@@ -167,15 +167,15 @@ function VendingMachine(display, returnCoin, dispenser) {
 
     function dispense(vm) {
         display("THANK YOU");
-        vm._currentAmount = 0;
+        currentAmount = 0;
         dispenser.dispense1();
         setTimeout(() => display("INSERT COIN"), 3000);
     }
 
     function reject(vm) {
         display("PRICE $ 1.00");
-        const message = vm._currentAmount > 0
-            ? formatAmount(vm._currentAmount)
+        const message = currentAmount > 0
+            ? formatAmount(currentAmount)
             : "INSERT COIN";
         setTimeout(() => display(message), 3000);
     }
