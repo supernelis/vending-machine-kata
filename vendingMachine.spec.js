@@ -145,7 +145,6 @@ function VendingMachine(display, returnCoin, dispenser) {
 
     display("INSERT COIN");
     this._currentAmount = 0;
-    this._dispenser = dispenser;
 
     this.insertCoin = (weight) => {
         const coin = coins.find((c) => c.weight == weight);
@@ -169,7 +168,7 @@ function VendingMachine(display, returnCoin, dispenser) {
     function dispense(vm) {
         display("THANK YOU");
         vm._currentAmount = 0;
-        vm._dispenser.dispense1();
+        dispenser.dispense1();
         setTimeout(() => display("INSERT COIN"), 3000);
     }
 
