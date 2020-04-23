@@ -145,7 +145,6 @@ function VendingMachine(display, returnCoin, dispenser) {
 
     display("INSERT COIN");
     this._display = display;
-    this._returnCoin = returnCoin;
     this._currentAmount = 0;
     this._dispenser = dispenser;
 
@@ -156,7 +155,7 @@ function VendingMachine(display, returnCoin, dispenser) {
             this._currentAmount += coin.amount;
             this._display(formatAmount(this._currentAmount));
         } else {
-            this._returnCoin();
+            returnCoin();
         }
     }
 
