@@ -11,7 +11,7 @@ let display, returnCoin, vendingMachine, dispenser;
 
 beforeEach(() => {
     dispenser = {
-        dispense1 : jest.fn()
+        dispense1: jest.fn()
     };
     display = jest.fn();
     returnCoin = jest.fn();
@@ -149,15 +149,24 @@ class VendingMachine {
 
     selectProduct1() {
         if (this._currentAmount >= 1.0) {
-            this._display("THANK YOU");
-            this._dispenser.dispense1();
-            setTimeout(() => this._display("INSERT COIN"), 3000);
+            dispense(this);
         } else {
-            this._display("PRICE $ 1.00");
-            const message = this._currentAmount > 0
-                ? formatAmount(this._currentAmount)
-                : "INSERT COIN";
-            setTimeout(() => this._display(message), 3000);
+            reject(this);
         }
     }
+}
+
+function dispense(vm) {
+    vm._display("THANK YOU");
+    vm._dispenser.dispense1();
+    setTimeout(() => vm._display("INSERT COIN"), 3000);
+}
+
+function reject(vm) {
+    vm._display("PRICE $ 1.00");
+    const message = vm._currentAmount > 0
+        ? formatAmount(vm._currentAmount)
+        : "INSERT COIN";
+    setTimeout(() => vm._display(message), 3000);
+
 }
