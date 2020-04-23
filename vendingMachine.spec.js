@@ -184,7 +184,10 @@ function vendingMachine(display, returnCoin, dispenser) {
         },
 
         selectProduct1: () => {
-            if (currentAmount >= 1.0) {
+            const cola = {
+                price: 1.0
+            }
+            if (currentAmount >= cola.price) {
                 dispense();
             } else {
                 reject();
@@ -192,7 +195,10 @@ function vendingMachine(display, returnCoin, dispenser) {
         },
 
         selectProduct2: () => {
-            if (currentAmount >= 0.5) {
+            const chips = {
+                price: 0.5
+            }
+            if (currentAmount >= chips.price) {
                 display("THANK YOU");
                 currentAmount = 0;
                 dispenser.dispense2();
