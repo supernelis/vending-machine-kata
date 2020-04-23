@@ -156,10 +156,10 @@ function vendingMachine(display, returnCoin, dispenser) {
     display("INSERT COIN");
     let currentAmount = 0;
 
-    function dispense() {
+    function dispense(tray) {
         display("THANK YOU");
         currentAmount = 0;
-        dispenser.dispense1();
+        tray();
         setTimeout(() => display("INSERT COIN"), 3000);
     }
 
@@ -185,10 +185,11 @@ function vendingMachine(display, returnCoin, dispenser) {
 
         selectProduct1: () => {
             const cola = {
-                price: 1.0
+                price: 1.0,
+                tray: dispenser.dispense1
             }
             if (currentAmount >= cola.price) {
-                dispense();
+                dispense(cola.tray);
             } else {
                 reject();
             }
