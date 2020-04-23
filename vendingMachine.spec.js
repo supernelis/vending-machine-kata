@@ -79,6 +79,18 @@ describe("Select product", () => {
         expect(display).toHaveBeenCalledWith("PRICE $ 1.00");
         expect(display).toHaveBeenLastCalledWith("$ 0.05");
     });
+
+    it("displays THANKYOU after successfull selection", () => {
+        vendingMachine.insertCoin(quarterWeight);
+        vendingMachine.insertCoin(quarterWeight);
+        vendingMachine.insertCoin(quarterWeight);
+        vendingMachine.insertCoin(quarterWeight);
+
+        vendingMachine.selectProduct1();
+
+        expect(display).toHaveBeenCalledWith("THANK YOU");
+        expect(display).toHaveBeenLastCalledWith("INSERT COIN");
+    });
 });
 
 const nickel = {
@@ -121,6 +133,11 @@ class VendingMachine {
     }
 
     selectProduct1() {
+        if (this._currentAmount >= 1.0) {
+            this._display("THANK YOU");
+            setTimeout(() => this._display("INSERT COIN"), 3000);
+            return;
+        }
         this._display("PRICE $ 1.00");
         const message = this._currentAmount > 0
          ? formatAmount(this._currentAmount) 
