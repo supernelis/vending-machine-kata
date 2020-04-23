@@ -105,6 +105,21 @@ describe("Select product", () => {
 
         expect(dispenser.dispense1).toHaveBeenCalled();
     });
+
+    it("allows only one product to be dispensed", () => {
+        vendingMachine.insertCoin(quarterWeight);
+        vendingMachine.insertCoin(quarterWeight);
+        vendingMachine.insertCoin(quarterWeight);
+        vendingMachine.insertCoin(quarterWeight);
+
+        vendingMachine.selectProduct1();
+        vendingMachine.selectProduct1();
+
+        expect(display).toHaveBeenCalledWith("PRICE $ 1.00");
+        expect(display).toHaveBeenLastCalledWith("INSERT COIN");
+
+        expect(dispenser.dispense1).toHaveBeenCalledTimes(1);
+    });
 });
 
 const nickel = {
@@ -158,6 +173,7 @@ class VendingMachine {
 
 function dispense(vm) {
     vm._display("THANK YOU");
+    vm._currentAmount = 0;
     vm._dispenser.dispense1();
     setTimeout(() => vm._display("INSERT COIN"), 3000);
 }
