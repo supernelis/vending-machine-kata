@@ -166,20 +166,19 @@ function VendingMachine(display, returnCoin, dispenser) {
             reject(this);
         }
     }
-}
 
-function dispense(vm) {
-    vm._display("THANK YOU");
-    vm._currentAmount = 0;
-    vm._dispenser.dispense1();
-    setTimeout(() => vm._display("INSERT COIN"), 3000);
-}
+    function dispense(vm) {
+        vm._display("THANK YOU");
+        vm._currentAmount = 0;
+        vm._dispenser.dispense1();
+        setTimeout(() => vm._display("INSERT COIN"), 3000);
+    }
 
-function reject(vm) {
-    vm._display("PRICE $ 1.00");
-    const message = vm._currentAmount > 0
-        ? formatAmount(vm._currentAmount)
-        : "INSERT COIN";
-    setTimeout(() => vm._display(message), 3000);
-
+    function reject(vm) {
+        vm._display("PRICE $ 1.00");
+        const message = vm._currentAmount > 0
+            ? formatAmount(vm._currentAmount)
+            : "INSERT COIN";
+        setTimeout(() => vm._display(message), 3000);
+    }
 }
