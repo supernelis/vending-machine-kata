@@ -35,3 +35,21 @@ Retro day2:
   * Smaller steps, stick with process
   * Refactoring phase -> discuss approaches and then try one, small discussions
   * Discussions are good
+
+Retro day3:
+
+* What did you learn?
+  * Possible to refactor from class to function in small steps
+  * Class to function interesting +1
+  * Extracting select : first rename, extract and rename back
+  
+* What went well?
+  * We finished the second story
+  * Navigator who knows what to do +1
+  * Discussions worked well, a bit more
+  * Once we switched every 3 minutes worked well
+
+* What did not go well?
+  * Less smooth? 3 minute forces switch does not work well for us.
+  * Timer not visible?
+  * Slow?
