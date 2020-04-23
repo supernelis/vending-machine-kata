@@ -15,7 +15,7 @@ beforeEach(() => {
     };
     display = jest.fn();
     returnCoin = jest.fn();
-    vendingMachine = new VendingMachine(display, returnCoin, dispenser);
+    vendingMachine = vendingmachine(display, returnCoin, dispenser);
 });
 
 describe("accept coin", () => {
@@ -122,7 +122,7 @@ describe("Select product", () => {
     });
 });
 
-function VendingMachine(display, returnCoin, dispenser) {
+function vendingmachine(display, returnCoin, dispenser) {
 
     const nickel = {
         weight: 5.0,
