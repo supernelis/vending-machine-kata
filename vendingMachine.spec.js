@@ -159,20 +159,20 @@ function VendingMachine(display, returnCoin, dispenser) {
 
     this.selectProduct1 = () => {
         if (currentAmount >= 1.0) {
-            dispense(this);
+            dispense();
         } else {
-            reject(this);
+            reject();
         }
     }
 
-    function dispense(vm) {
+    function dispense() {
         display("THANK YOU");
         currentAmount = 0;
         dispenser.dispense1();
         setTimeout(() => display("INSERT COIN"), 3000);
     }
 
-    function reject(vm) {
+    function reject() {
         display("PRICE $ 1.00");
         const message = currentAmount > 0
             ? formatAmount(currentAmount)
