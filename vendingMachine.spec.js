@@ -136,12 +136,12 @@ class VendingMachine {
         if (this._currentAmount >= 1.0) {
             this._display("THANK YOU");
             setTimeout(() => this._display("INSERT COIN"), 3000);
-            return;
+        } else {
+            this._display("PRICE $ 1.00");
+            const message = this._currentAmount > 0
+                ? formatAmount(this._currentAmount)
+                : "INSERT COIN";
+            setTimeout(() => this._display(message), 3000);
         }
-        this._display("PRICE $ 1.00");
-        const message = this._currentAmount > 0
-         ? formatAmount(this._currentAmount) 
-         : "INSERT COIN";
-        setTimeout(() => this._display(message), 3000);
     }
 }
