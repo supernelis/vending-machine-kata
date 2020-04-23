@@ -7,7 +7,7 @@ const dimeWeight = 2.268;
 const quarterWeight = 5.670;
 const invalidWeight = 123.45;
 
-let display, returnCoin, vendingMachine, dispenser;
+let display, returnCoin, machine, dispenser;
 
 beforeEach(() => {
     dispenser = {
@@ -15,7 +15,7 @@ beforeEach(() => {
     };
     display = jest.fn();
     returnCoin = jest.fn();
-    vendingMachine = vendingmachine(display, returnCoin, dispenser);
+    machine = vendingMachine(display, returnCoin, dispenser);
 });
 
 describe("accept coin", () => {
@@ -25,39 +25,39 @@ describe("accept coin", () => {
     });
 
     it("displays the value of a nickel when inserted", () => {
-        vendingMachine.insertCoin(nickelWeight);
+        machine.insertCoin(nickelWeight);
 
         expect(display).toHaveBeenCalledWith("$ 0.05");
     });
 
     it("displays the value of a dime when inserted", () => {
-        vendingMachine.insertCoin(dimeWeight);
+        machine.insertCoin(dimeWeight);
 
         expect(display).toHaveBeenCalledWith("$ 0.10");
     });
 
     it("displays the value of a quarter when inserted", () => {
-        vendingMachine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
 
         expect(display).toHaveBeenCalledWith("$ 0.25");
     });
 
     it("returns invalid coins", () => {
-        vendingMachine.insertCoin(invalidWeight);
+        machine.insertCoin(invalidWeight);
 
         expect(returnCoin).toBeCalled();
     });
 
     it("doesn't update the display when an invalid coin is inserted", () => {
-        vendingMachine.insertCoin(invalidWeight);
+        machine.insertCoin(invalidWeight);
 
         expect(display).toBeCalledTimes(1);
     });
 
     it("displays current amount of inserted coins", () => {
-        vendingMachine.insertCoin(quarterWeight);
-        vendingMachine.insertCoin(dimeWeight);
-        vendingMachine.insertCoin(nickelWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(dimeWeight);
+        machine.insertCoin(nickelWeight);
 
         expect(display).toHaveBeenCalledWith("$ 0.40");
     });
@@ -68,52 +68,52 @@ describe("Select product", () => {
     window.setTimeout = (callback) => callback();
 
     it("displays $1.00 when cola is selected without adding money", () => {
-        vendingMachine.selectProduct1();
+        machine.selectProduct1();
 
         expect(display).toHaveBeenCalledWith("PRICE $ 1.00");
         expect(display).toHaveBeenLastCalledWith("INSERT COIN");
     });
 
     it("displays $1.00 and then the current amount when cola is selected and inserted amount is insufficient", () => {
-        vendingMachine.insertCoin(nickelWeight);
+        machine.insertCoin(nickelWeight);
 
-        vendingMachine.selectProduct1();
+        machine.selectProduct1();
 
         expect(display).toHaveBeenCalledWith("PRICE $ 1.00");
         expect(display).toHaveBeenLastCalledWith("$ 0.05");
     });
 
     it("displays THANK YOU after successfull selection", () => {
-        vendingMachine.insertCoin(quarterWeight);
-        vendingMachine.insertCoin(quarterWeight);
-        vendingMachine.insertCoin(quarterWeight);
-        vendingMachine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
 
-        vendingMachine.selectProduct1();
+        machine.selectProduct1();
 
         expect(display).toHaveBeenCalledWith("THANK YOU");
         expect(display).toHaveBeenLastCalledWith("INSERT COIN");
     });
 
     it("dispenses a coke after successfull selection", () => {
-        vendingMachine.insertCoin(quarterWeight);
-        vendingMachine.insertCoin(quarterWeight);
-        vendingMachine.insertCoin(quarterWeight);
-        vendingMachine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
 
-        vendingMachine.selectProduct1();
+        machine.selectProduct1();
 
         expect(dispenser.dispense1).toHaveBeenCalled();
     });
 
     it("allows only one product to be dispensed", () => {
-        vendingMachine.insertCoin(quarterWeight);
-        vendingMachine.insertCoin(quarterWeight);
-        vendingMachine.insertCoin(quarterWeight);
-        vendingMachine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
 
-        vendingMachine.selectProduct1();
-        vendingMachine.selectProduct1();
+        machine.selectProduct1();
+        machine.selectProduct1();
 
         expect(display).toHaveBeenCalledWith("PRICE $ 1.00");
         expect(display).toHaveBeenLastCalledWith("INSERT COIN");
@@ -122,7 +122,7 @@ describe("Select product", () => {
     });
 });
 
-function vendingmachine(display, returnCoin, dispenser) {
+function vendingMachine(display, returnCoin, dispenser) {
 
     const nickel = {
         weight: 5.0,
@@ -180,5 +180,5 @@ function vendingmachine(display, returnCoin, dispenser) {
                 reject();
             }
         }
-    }
+    };
 }
