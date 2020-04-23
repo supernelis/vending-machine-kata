@@ -80,7 +80,7 @@ describe("Select product", () => {
         expect(display).toHaveBeenLastCalledWith("$ 0.05");
     });
 
-    it("displays THANKYOU after successfull selection", () => {
+    it("displays THANK YOU after successfull selection", () => {
         vendingMachine.insertCoin(quarterWeight);
         vendingMachine.insertCoin(quarterWeight);
         vendingMachine.insertCoin(quarterWeight);
