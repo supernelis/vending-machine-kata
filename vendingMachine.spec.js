@@ -11,7 +11,8 @@ let display, returnCoin, machine, dispenser;
 
 beforeEach(() => {
     dispenser = {
-        dispense1: jest.fn()
+        dispense1: jest.fn(),
+        dispense2: jest.fn()
     };
     display = jest.fn();
     returnCoin = jest.fn();
@@ -120,6 +121,15 @@ describe("Select product", () => {
 
         expect(dispenser.dispense1).toHaveBeenCalledTimes(1);
     });
+
+    it("dispenses chips after successful selection", () => {
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+
+        machine.selectProduct2();
+
+        expect(dispenser.dispense2).toHaveBeenCalled();
+    });
 });
 
 function vendingMachine(display, returnCoin, dispenser) {
@@ -176,6 +186,17 @@ function vendingMachine(display, returnCoin, dispenser) {
         selectProduct1: () => {
             if (currentAmount >= 1.0) {
                 dispense();
+            } else {
+                reject();
+            }
+        },
+
+        selectProduct2: () => {
+            if (currentAmount >= 0.5) {
+                display("THANK YOU");
+                currentAmount = 0;
+                dispenser.dispense2();
+                setTimeout(() => display("INSERT COIN"), 3000);
             } else {
                 reject();
             }
