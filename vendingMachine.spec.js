@@ -199,7 +199,7 @@ describe("Make change", () => {
         expect(coinMachine.returnDime).toHaveBeenCalledTimes(1);
     });
 
-    xit("returns a dime and a quarter when 4 quarters and candy is selected", () => {
+    it("returns a dime and a quarter when 4 quarters and candy is selected", () => {
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
