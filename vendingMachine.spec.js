@@ -256,17 +256,20 @@ function vendingMachine(display, coinMachine, dispenser) {
 
     const nickel = {
         weight: 5.0,
-        amount: 5
+        amount: 5,
+        asChange: coinMachine.returnNickel
     };
 
     const dime = {
         weight: 2.268,
-        amount: 10
+        amount: 10,
+        asChange: coinMachine.returnDime
     };
 
     const quarter = {
         weight: 5.670,
-        amount: 25
+        amount: 25,
+        asChange: coinMachine.returnQuarter
     };
 
     const coins = [nickel, dime, quarter];
@@ -295,17 +298,17 @@ function vendingMachine(display, coinMachine, dispenser) {
     function returnChange() {
         while (currentAmount >= quarter.amount) {
             currentAmount -= quarter.amount;
-            coinMachine.returnQuarter();
+            quarter.asChange();
         }
 
         while (currentAmount >= dime.amount) {
             currentAmount -= dime.amount;
-            coinMachine.returnDime();
+            dime.asChange();
         }
 
         while (currentAmount >= nickel.amount) {
             currentAmount -= nickel.amount;
-            coinMachine.returnNickel();
+            nickel.asChange();
         }
     }
 
