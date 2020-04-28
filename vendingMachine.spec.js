@@ -19,7 +19,8 @@ beforeEach(() => {
     coinMachine = {
         returnInserted: jest.fn(),
         returnQuarter: jest.fn(),
-        returnDime: jest.fn()
+        returnDime: jest.fn(),
+        returnNickel: jest.fn()
     };
     machine = vendingMachine(display, coinMachine, dispenser);
 });
@@ -222,6 +223,19 @@ describe("Make change", () => {
         expect(coinMachine.returnDime).toHaveBeenCalledTimes(2);
     });
 
+    it("returns 1 nickel when 7 dimes are inserted and candy is selected", () => {
+        machine.insertCoin(dimeWeight);
+        machine.insertCoin(dimeWeight);
+        machine.insertCoin(dimeWeight);
+        machine.insertCoin(dimeWeight);
+        machine.insertCoin(dimeWeight);
+        machine.insertCoin(dimeWeight);
+        machine.insertCoin(dimeWeight);
+
+        machine.selectProduct3();
+
+        expect(coinMachine.returnNickel).toHaveBeenCalledTimes(1);
+    });
 });
 
 function vendingMachine(display, coinMachine, dispenser) {
@@ -269,9 +283,12 @@ function vendingMachine(display, coinMachine, dispenser) {
             if (currentAmount >= 25) {
                 currentAmount -= 25;
                 coinMachine.returnQuarter();
-            } else {
+            } else if (currentAmount >= 10) {
                 currentAmount -= 10;
                 coinMachine.returnDime();
+            } else {
+                currentAmount -= 5;
+                coinMachine.returnNickel();
             }
         }
     }
