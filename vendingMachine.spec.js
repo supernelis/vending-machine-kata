@@ -199,28 +199,40 @@ describe("Make change", () => {
         expect(coinMachine.returnDime).toHaveBeenCalledTimes(1);
     });
 
+    xit("returns a dime and a quarter when 4 quarters and candy is selected", () => {
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+
+        machine.selectProduct3();
+
+        expect(coinMachine.returnDime).toHaveBeenCalledTimes(1);
+        expect(coinMachine.returnQuarter).toHaveBeenCalledTimes(1);
+    });
+
 });
 
 function vendingMachine(display, coinMachine, dispenser) {
 
     const nickel = {
         weight: 5.0,
-        amount: 0.05
+        amount: 5
     };
 
     const dime = {
         weight: 2.268,
-        amount: 0.10
+        amount: 10
     };
 
     const quarter = {
         weight: 5.670,
-        amount: 0.25
+        amount: 25
     };
 
     const coins = [nickel, dime, quarter];
     const isValidCoin = (coin) => coin;
-    const formatAmount = (amount) => `$ ${amount.toFixed(2)}`;
+    const formatAmount = (amount) => `$ ${(amount/100).toFixed(2)}`;
 
     display("INSERT COIN");
     let currentAmount = 0;
@@ -237,11 +249,11 @@ function vendingMachine(display, coinMachine, dispenser) {
         display("THANK YOU");
         currentAmount = (currentAmount - product.price).toFixed(2);
         while (currentAmount > 0) {
-            if (currentAmount == 0.1) {
-                currentAmount -= 0.1;
+            if (currentAmount == 10) {
+                currentAmount -= 10;
                 coinMachine.returnDime();
             } else {
-                currentAmount -= 0.25;
+                currentAmount -= 25;
                 coinMachine.returnQuarter();
             }
         }
@@ -271,7 +283,7 @@ function vendingMachine(display, coinMachine, dispenser) {
 
         selectProduct1: () => {
             const cola = {
-                price: 1.0,
+                price: 100,
                 tray: dispenser.dispense1
             };
             select(cola);
@@ -279,7 +291,7 @@ function vendingMachine(display, coinMachine, dispenser) {
 
         selectProduct2: () => {
             const chips = {
-                price: 0.5,
+                price: 50,
                 tray: dispenser.dispense2
             };
             select(chips);
@@ -287,7 +299,7 @@ function vendingMachine(display, coinMachine, dispenser) {
 
         selectProduct3: () => {
             const candy = {
-                price: 0.65,
+                price: 65,
                 tray: dispenser.dispense3
             };
             select(candy);
