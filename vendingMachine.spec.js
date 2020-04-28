@@ -156,7 +156,7 @@ describe("Select product", () => {
 });
 
 describe("Make change", () => {
-    it("returns a quarter when 3 quarters and chips is selected", () => {
+    it("returns a quarter when 3 quarters are inserted and chips is selected", () => {
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
@@ -166,7 +166,7 @@ describe("Make change", () => {
         expect(coinMachine.returnQuarter).toHaveBeenCalledTimes(1);
     });
 
-    it("returns 2 quarters when 4 quarters and chips is selected", () => {
+    it("returns 2 quarters when 4 quarters are inserted and chips is selected", () => {
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
@@ -177,7 +177,7 @@ describe("Make change", () => {
         expect(coinMachine.returnQuarter).toHaveBeenCalledTimes(2);
     });
 
-    it("returns 3 quarters when 5 quarters and chips is selected", () => {
+    it("returns 3 quarters when 5 quarters are inserted and chips is selected", () => {
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
@@ -189,7 +189,7 @@ describe("Make change", () => {
         expect(coinMachine.returnQuarter).toHaveBeenCalledTimes(3);
     });
 
-    it("returns a dime when 3 quarters and candy is selected", () => {
+    it("returns a dime when 3 quarters are inserted and candy is selected", () => {
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
@@ -199,7 +199,7 @@ describe("Make change", () => {
         expect(coinMachine.returnDime).toHaveBeenCalledTimes(1);
     });
 
-    it("returns a dime and a quarter when 4 quarters and candy is selected", () => {
+    it("returns a dime and a quarter when 4 quarters are inserted and candy is selected", () => {
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
