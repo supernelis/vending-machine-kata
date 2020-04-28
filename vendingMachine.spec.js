@@ -296,20 +296,12 @@ function vendingMachine(display, coinMachine, dispenser) {
     }
 
     function returnChange() {
-        while (currentAmount >= quarter.amount) {
-            currentAmount -= quarter.amount;
-            quarter.asChange();
-        }
-
-        while (currentAmount >= dime.amount) {
-            currentAmount -= dime.amount;
-            dime.asChange();
-        }
-
-        while (currentAmount >= nickel.amount) {
-            currentAmount -= nickel.amount;
-            nickel.asChange();
-        }
+        coins.reverse().forEach(coin => {
+            while (currentAmount >= coin.amount) {
+                currentAmount -= coin.amount;
+                coin.asChange();
+            }
+        });
     }
 
     function reject(price) {
