@@ -247,9 +247,9 @@ function vendingMachine(display, coinMachine, dispenser) {
 
     function dispense(product) {
         display("THANK YOU");
-        currentAmount = (currentAmount - product.price).toFixed(2);
+        currentAmount = currentAmount - product.price;
         while (currentAmount > 0) {
-            if (currentAmount == 10) {
+            if (currentAmount === 10) {
                 currentAmount -= 10;
                 coinMachine.returnDime();
             } else {
