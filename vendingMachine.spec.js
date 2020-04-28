@@ -248,6 +248,12 @@ function vendingMachine(display, coinMachine, dispenser) {
     function dispense(product) {
         display("THANK YOU");
         currentAmount = currentAmount - product.price;
+        returnChange();
+        product.tray();
+        setTimeout(() => display("INSERT COIN"), 3000);
+    }
+    
+    function returnChange() {
         while (currentAmount > 0) {
             if (currentAmount === 10) {
                 currentAmount -= 10;
@@ -257,8 +263,6 @@ function vendingMachine(display, coinMachine, dispenser) {
                 coinMachine.returnQuarter();
             }
         }
-        product.tray();
-        setTimeout(() => display("INSERT COIN"), 3000);
     }
 
     function reject(price) {
