@@ -211,6 +211,17 @@ describe("Make change", () => {
         expect(coinMachine.returnQuarter).toHaveBeenCalledTimes(1);
     });
 
+    it("returns 2 dimes when 3 quarters and 1 dime are inserted and candy is selected", () => {
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(dimeWeight);
+
+        machine.selectProduct3();
+
+        expect(coinMachine.returnDime).toHaveBeenCalledTimes(2);
+    });
+
 });
 
 function vendingMachine(display, coinMachine, dispenser) {
@@ -255,12 +266,12 @@ function vendingMachine(display, coinMachine, dispenser) {
     
     function returnChange() {
         while (currentAmount > 0) {
-            if (currentAmount === 10) {
-                currentAmount -= 10;
-                coinMachine.returnDime();
-            } else {
+            if (currentAmount >= 25) {
                 currentAmount -= 25;
                 coinMachine.returnQuarter();
+            } else {
+                currentAmount -= 10;
+                coinMachine.returnDime();
             }
         }
     }
