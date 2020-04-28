@@ -165,7 +165,7 @@ describe("Make change", () => {
         expect(coinMachine.returnQuarter).toHaveBeenCalledTimes(1);
     });
 
-    it("returns a quarter when 4 quarters and chips is selected", () => {
+    it("returns 2 quarters when 4 quarters and chips is selected", () => {
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
@@ -174,6 +174,18 @@ describe("Make change", () => {
         machine.selectProduct2();
 
         expect(coinMachine.returnQuarter).toHaveBeenCalledTimes(2);
+    });
+
+    it("returns 3 quarters when 5 quarters and chips is selected", () => {
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+
+        machine.selectProduct2();
+
+        expect(coinMachine.returnQuarter).toHaveBeenCalledTimes(3);
     });
 });
 
@@ -212,7 +224,12 @@ function vendingMachine(display, coinMachine, dispenser) {
     function dispense(tray, price) {
         display("THANK YOU");
         currentAmount = currentAmount - price;
-        if (currentAmount === 0.5) {
+        if (currentAmount === 0.75) {
+            currentAmount = 0;
+            coinMachine.returnQuarter();
+            coinMachine.returnQuarter();
+            coinMachine.returnQuarter();
+        } else if (currentAmount === 0.5) {
             currentAmount = 0;
             coinMachine.returnQuarter();
             coinMachine.returnQuarter();
