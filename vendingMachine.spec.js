@@ -7,7 +7,7 @@ const dimeWeight = 2.268;
 const quarterWeight = 5.670;
 const invalidWeight = 123.45;
 
-let display, returnCoin, machine, dispenser;
+let display, returnCoin, machine, dispenser, coinMachine;
 
 beforeEach(() => {
     dispenser = {
@@ -16,8 +16,10 @@ beforeEach(() => {
         dispense3: jest.fn()
     };
     display = jest.fn();
-    returnCoin = jest.fn();
-    machine = vendingMachine(display, returnCoin, dispenser);
+    coinMachine = {
+        returnInserted: jest.fn()
+    };
+    machine = vendingMachine(display, coinMachine, dispenser);
 });
 
 describe("accept coin", () => {
@@ -47,7 +49,7 @@ describe("accept coin", () => {
     it("returns invalid coins", () => {
         machine.insertCoin(invalidWeight);
 
-        expect(returnCoin).toBeCalled();
+        expect(coinMachine.returnInserted).toBeCalled();
     });
 
     it("doesn't update the display when an invalid coin is inserted", () => {
@@ -151,7 +153,19 @@ describe("Select product", () => {
     });
 });
 
-function vendingMachine(display, returnCoin, dispenser) {
+describe("Make change", () => {
+    xit("returns a quarter when 3 quarters and chips is selected", () => {
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+
+        machine.selectProduct2();
+
+        expect(coinMachine.returnQuarter).toHaveBeenCalledTimes(1);
+    }); 
+});
+
+function vendingMachine(display, coinMachine, dispenser) {
 
     const nickel = {
         weight: 5.0,
@@ -206,7 +220,7 @@ function vendingMachine(display, returnCoin, dispenser) {
                 currentAmount += coin.amount;
                 display(formatAmount(currentAmount));
             } else {
-                returnCoin();
+                coinMachine.returnInserted();
             }
         },
 
