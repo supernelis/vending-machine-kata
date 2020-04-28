@@ -76,6 +76,13 @@ describe("Select product", () => {
         expect(display).toHaveBeenLastCalledWith("INSERT COIN");
     });
 
+    it("displays $0.50 when chips is selected without adding money", () => {
+        machine.selectProduct2();
+
+        expect(display).toHaveBeenCalledWith("PRICE $ 0.50");
+        expect(display).toHaveBeenLastCalledWith("INSERT COIN");
+    });
+
     it("displays $1.00 and then the current amount when cola is selected and inserted amount is insufficient", () => {
         machine.insertCoin(nickelWeight);
 
@@ -172,7 +179,7 @@ function vendingMachine(display, returnCoin, dispenser) {
         if (currentAmount >= product.price) {
             dispense(product.tray);
         } else {
-            reject();
+            reject(product.price);
         }
     }
 
@@ -183,8 +190,8 @@ function vendingMachine(display, returnCoin, dispenser) {
         setTimeout(() => display("INSERT COIN"), 3000);
     }
 
-    function reject() {
-        display("PRICE $ 1.00");
+    function reject(price) {
+        display(`PRICE ${formatAmount(price)}`);
         const message = currentAmount > 0
             ? formatAmount(currentAmount)
             : "INSERT COIN";
