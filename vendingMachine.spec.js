@@ -294,14 +294,14 @@ function vendingMachine(display, coinMachine, dispenser) {
     
     function returnChange() {
         while (currentAmount > 0) {
-            if (currentAmount >= 25) {
-                currentAmount -= 25;
+            if (currentAmount >= quarter.amount) {
+                currentAmount -= quarter.amount;
                 coinMachine.returnQuarter();
-            } else if (currentAmount >= 10) {
-                currentAmount -= 10;
+            } else if (currentAmount >= dime.amount) {
+                currentAmount -= dime.amount;
                 coinMachine.returnDime();
             } else {
-                currentAmount -= 5;
+                currentAmount -= nickel.amount;
                 coinMachine.returnNickel();
             }
         }
