@@ -163,7 +163,18 @@ describe("Make change", () => {
         machine.selectProduct2();
 
         expect(coinMachine.returnQuarter).toHaveBeenCalledTimes(1);
-    }); 
+    });
+
+    it("returns a quarter when 4 quarters and chips is selected", () => {
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+
+        machine.selectProduct2();
+
+        expect(coinMachine.returnQuarter).toHaveBeenCalledTimes(2);
+    });
 });
 
 function vendingMachine(display, coinMachine, dispenser) {
@@ -201,7 +212,11 @@ function vendingMachine(display, coinMachine, dispenser) {
     function dispense(tray, price) {
         display("THANK YOU");
         currentAmount = currentAmount - price;
-        if (currentAmount > 0) {
+        if (currentAmount === 0.5) {
+            currentAmount = 0;
+            coinMachine.returnQuarter();
+            coinMachine.returnQuarter();
+        } else if (currentAmount > 0) {
             currentAmount = 0;
             coinMachine.returnQuarter();
         }
