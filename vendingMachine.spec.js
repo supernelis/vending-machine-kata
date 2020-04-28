@@ -17,7 +17,8 @@ beforeEach(() => {
     };
     display = jest.fn();
     coinMachine = {
-        returnInserted: jest.fn()
+        returnInserted: jest.fn(),
+        returnQuarter: jest.fn()
     };
     machine = vendingMachine(display, coinMachine, dispenser);
 });
@@ -154,7 +155,7 @@ describe("Select product", () => {
 });
 
 describe("Make change", () => {
-    xit("returns a quarter when 3 quarters and chips is selected", () => {
+    it("returns a quarter when 3 quarters and chips is selected", () => {
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
         machine.insertCoin(quarterWeight);
@@ -191,15 +192,19 @@ function vendingMachine(display, coinMachine, dispenser) {
 
     function select(product) {
         if (currentAmount >= product.price) {
-            dispense(product.tray);
+            dispense(product.tray, product.price);
         } else {
             reject(product.price);
         }
     }
 
-    function dispense(tray) {
+    function dispense(tray, price) {
         display("THANK YOU");
-        currentAmount = 0;
+        currentAmount = currentAmount - price;
+        if (currentAmount > 0) {
+            currentAmount = 0;
+            coinMachine.returnQuarter();
+        }
         tray();
         setTimeout(() => display("INSERT COIN"), 3000);
     }
