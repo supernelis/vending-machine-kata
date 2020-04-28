@@ -224,19 +224,10 @@ function vendingMachine(display, coinMachine, dispenser) {
     function dispense(product) {
         display("THANK YOU");
         currentAmount = currentAmount - product.price;
-        if (currentAmount === 0.75) {
-            currentAmount = 0;
+        while (currentAmount > 0) {
+            currentAmount -= 0.25;
             coinMachine.returnQuarter();
-            coinMachine.returnQuarter();
-            coinMachine.returnQuarter();
-        } else if (currentAmount === 0.5) {
-            currentAmount = 0;
-            coinMachine.returnQuarter();
-            coinMachine.returnQuarter();
-        } else if (currentAmount > 0) {
-            currentAmount = 0;
-            coinMachine.returnQuarter();
-        }
+        } 
         product.tray();
         setTimeout(() => display("INSERT COIN"), 3000);
     }
