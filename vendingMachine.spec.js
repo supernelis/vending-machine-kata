@@ -271,7 +271,7 @@ function vendingMachine(display, coinMachine, dispenser) {
 
     const coins = [nickel, dime, quarter];
     const isValidCoin = (coin) => coin;
-    const formatAmount = (amount) => `$ ${(amount/100).toFixed(2)}`;
+    const formatAmount = (amount) => `$ ${(amount / 100).toFixed(2)}`;
 
     display("INSERT COIN");
     let currentAmount = 0;
@@ -291,19 +291,21 @@ function vendingMachine(display, coinMachine, dispenser) {
         product.tray();
         setTimeout(() => display("INSERT COIN"), 3000);
     }
-    
+
     function returnChange() {
-        while (currentAmount > 0) {
-            if (currentAmount >= quarter.amount) {
-                currentAmount -= quarter.amount;
-                coinMachine.returnQuarter();
-            } else if (currentAmount >= dime.amount) {
-                currentAmount -= dime.amount;
-                coinMachine.returnDime();
-            } else {
-                currentAmount -= nickel.amount;
-                coinMachine.returnNickel();
-            }
+        while (currentAmount >= quarter.amount) {
+            currentAmount -= quarter.amount;
+            coinMachine.returnQuarter();
+        }
+
+        while (currentAmount >= dime.amount) {
+            currentAmount -= dime.amount;
+            coinMachine.returnDime();
+        }
+
+        while (currentAmount >= nickel.amount) {
+            currentAmount -= nickel.amount;
+            coinMachine.returnNickel();
         }
     }
 
