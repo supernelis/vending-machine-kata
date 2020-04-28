@@ -236,6 +236,20 @@ describe("Make change", () => {
 
         expect(coinMachine.returnNickel).toHaveBeenCalledTimes(1);
     });
+
+    it("returns 1 nickel, 1 dime and a quarter when 3 quarters, 1 nickel and 1 dime are inserted and chips is selected", () => {
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(dimeWeight);
+        machine.insertCoin(nickelWeight);
+
+        machine.selectProduct2();
+
+        expect(coinMachine.returnQuarter).toHaveBeenCalledTimes(1);
+        expect(coinMachine.returnDime).toHaveBeenCalledTimes(1);
+        expect(coinMachine.returnNickel).toHaveBeenCalledTimes(1);
+    });
 });
 
 function vendingMachine(display, coinMachine, dispenser) {
