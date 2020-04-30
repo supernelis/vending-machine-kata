@@ -264,6 +264,16 @@ describe("Return Coin", () => {
         expect(coinMachine.refund).toHaveBeenCalledTimes(1)
         expect(display).toHaveBeenLastCalledWith("INSERT COIN")
     });
+
+    it("does not dispense chips when sufficient money is inserted and refunded", () => {
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.refund();
+
+        machine.selectProduct2();
+    
+        expect(dispenser.dispense2).toBeCalledTimes(0);
+    });
  });
 
 function vendingMachine(display, coinMachine, dispenser) {
@@ -364,6 +374,7 @@ function vendingMachine(display, coinMachine, dispenser) {
 
         refund: () => {
             coinMachine.refund();
+            currentAmount = 0;
             display("INSERT COIN");
         }
     };
