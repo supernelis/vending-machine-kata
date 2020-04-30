@@ -286,6 +286,16 @@ describe("Return Coin", () => {
         expect(display).toHaveBeenCalledWith("SOLD OUT");
         expect(display).toHaveBeenLastCalledWith("INSERT COIN");
     });
+
+    it("displays SOLD OUT when there are no chips", () => {
+        dispenser.isTray2Empty = () => true;
+        machine.insertCoin(quarterWeight);
+
+        machine.selectProduct2();
+
+        expect(display).toHaveBeenCalledWith("SOLD OUT");
+        expect(display).toHaveBeenLastCalledWith("$ 0.25");
+    });
  });
 
 function vendingMachine(display, coinMachine, dispenser) {
@@ -371,7 +381,10 @@ function vendingMachine(display, coinMachine, dispenser) {
         selectProduct2: () => {
             if (dispenser.isTray2Empty()) {
                 display("SOLD OUT");
-                setTimeout(() => display("INSERT COIN"), 3000);
+                const message = currentAmount > 0
+                ? formatAmount(currentAmount)
+                : "INSERT COIN";
+                setTimeout(() => display(message), 3000);
                 return;
             }
             const chips = {
