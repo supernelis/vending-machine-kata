@@ -14,7 +14,9 @@ beforeEach(() => {
         dispense1: jest.fn(),
         dispense2: jest.fn(),
         dispense3: jest.fn(),
-        isTray2Empty: () => false
+        isTray1Empty: () => false,
+        isTray2Empty: () => false,
+        isTray3Empty: () => false
     };
     display = jest.fn();
     coinMachine = {
@@ -295,6 +297,16 @@ describe("Sold Out", () => {
         expect(display).toHaveBeenCalledWith("SOLD OUT");
         expect(display).toHaveBeenLastCalledWith("$ 0.25");
     });
+
+    it("displays SOLD OUT when there are no coke", () => {
+        dispenser.isTray1Empty = () => true;
+        machine.insertCoin(quarterWeight);
+
+        machine.selectProduct1();
+
+        expect(display).toHaveBeenCalledWith("SOLD OUT");
+        expect(display).toHaveBeenLastCalledWith("$ 0.25");
+    });
 });
 
 function vendingMachine(display, coinMachine, dispenser) {
@@ -374,6 +386,11 @@ function vendingMachine(display, coinMachine, dispenser) {
         },
 
         selectProduct1: () => {
+            if (dispenser.isTray1Empty()) {
+                display("SOLD OUT");
+                askForMoreMoney();
+                return;
+            }
             const cola = {
                 price: 100,
                 tray: dispenser.dispense1
