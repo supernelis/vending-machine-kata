@@ -53,3 +53,19 @@ Retro day3:
   * Less smooth? 3 minute forces switch does not work well for us.
   * Timer not visible?
   * Slow?
+
+
+Retro day4:
+
+* What did you learn?
+  * Liveshare sucks
+  * More routine, no new constructs +2
+  * Not pass by accident +1
+
+* What went well?
+  * 3 minutes still worked +2
+  * Trying to have the same level of abstraction +1
+  
+* What did not go well?
+  * Less concentrated
+
