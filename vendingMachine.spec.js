@@ -347,6 +347,11 @@ function vendingMachine(display, coinMachine, dispenser) {
     let currentAmount = 0;
 
     function select(product) {
+        if (product.isSoldOut()) {
+            display("SOLD OUT");
+            askForMoreMoney();
+            return;
+        }
         if (currentAmount >= product.price) {
             dispense(product);
         } else {
@@ -396,40 +401,28 @@ function vendingMachine(display, coinMachine, dispenser) {
         },
 
         selectProduct1: () => {
-            if (dispenser.isTray1Empty()) {
-                display("SOLD OUT");
-                askForMoreMoney();
-                return;
-            }
             const cola = {
                 price: 100,
-                tray: dispenser.dispense1
+                tray: dispenser.dispense1,
+                isSoldOut: dispenser.isTray1Empty
             };
             select(cola);
         },
 
         selectProduct2: () => {
-            if (dispenser.isTray2Empty()) {
-                display("SOLD OUT");
-                askForMoreMoney();
-                return;
-            }
             const chips = {
                 price: 50,
-                tray: dispenser.dispense2
+                tray: dispenser.dispense2,
+                isSoldOut: dispenser.isTray2Empty
             };
             select(chips);
         },
 
         selectProduct3: () => {
-            if (dispenser.isTray3Empty()) {
-                display("SOLD OUT");
-                askForMoreMoney();
-                return;
-            }
-            const candy = {
+           const candy = {
                 price: 65,
-                tray: dispenser.dispense3
+                tray: dispenser.dispense3,
+                isSoldOut: dispenser.isTray3Empty
             };
             select(candy);
         },
