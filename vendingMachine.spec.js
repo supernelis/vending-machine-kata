@@ -13,7 +13,8 @@ beforeEach(() => {
     dispenser = {
         dispense1: jest.fn(),
         dispense2: jest.fn(),
-        dispense3: jest.fn()
+        dispense3: jest.fn(),
+        isTray2Empty: () => false 
     };
     display = jest.fn();
     coinMachine = {
@@ -276,6 +277,17 @@ describe("Return Coin", () => {
     });
  });
 
+ describe("Sold Out", () => {
+    it("displays SOLD OUT when there are no chips", () => {
+        dispenser.isTray2Empty = () => true;
+
+        machine.selectProduct2();
+
+        expect(display).toHaveBeenCalledWith("SOLD OUT");
+        expect(display).toHaveBeenLastCalledWith("INSERT COIN");
+    });
+ });
+
 function vendingMachine(display, coinMachine, dispenser) {
 
     const nickel = {
@@ -357,6 +369,11 @@ function vendingMachine(display, coinMachine, dispenser) {
         },
 
         selectProduct2: () => {
+            if (dispenser.isTray2Empty()) {
+                display("SOLD OUT");
+                setTimeout(() => display("INSERT COIN"), 3000);
+                return;
+            }
             const chips = {
                 price: 50,
                 tray: dispenser.dispense2
