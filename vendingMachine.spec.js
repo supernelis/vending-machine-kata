@@ -288,7 +288,7 @@ describe("Sold Out", () => {
         expect(display).toHaveBeenLastCalledWith("INSERT COIN");
     });
 
-    it("displays SOLD OUT when there are no chips", () => {
+    it("displays SOLD OUT and already inserted amount when there are no chips", () => {
         dispenser.isTray2Empty = () => true;
         machine.insertCoin(quarterWeight);
 
@@ -298,7 +298,7 @@ describe("Sold Out", () => {
         expect(display).toHaveBeenLastCalledWith("$ 0.25");
     });
 
-    it("displays SOLD OUT when there are no coke", () => {
+    it("displays SOLD OUT and already inserted amount when there are no coke", () => {
         dispenser.isTray1Empty = () => true;
         machine.insertCoin(quarterWeight);
 
