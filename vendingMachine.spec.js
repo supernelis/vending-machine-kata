@@ -348,15 +348,17 @@ function vendingMachine(display, coinMachine, dispenser) {
 
     function select(product) {
         if (product.isSoldOut()) {
-            display("SOLD OUT");
-            askForMoreMoney();
-            return;
-        }
-        if (currentAmount >= product.price) {
+            soldOut();
+        }else if (currentAmount >= product.price) {
             dispense(product);
         } else {
             reject(product.price);
         }
+    }
+
+    function soldOut(){
+        display("SOLD OUT");
+        askForMoreMoney();
     }
 
     function dispense(product) {
