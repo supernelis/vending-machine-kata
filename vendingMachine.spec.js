@@ -14,7 +14,7 @@ beforeEach(() => {
         dispense1: jest.fn(),
         dispense2: jest.fn(),
         dispense3: jest.fn(),
-        isTray2Empty: () => false 
+        isTray2Empty: () => false
     };
     display = jest.fn();
     coinMachine = {
@@ -73,7 +73,7 @@ describe("accept coin", () => {
     });
 });
 
-describe("Select product", () => { 
+describe("Select product", () => {
 
     it("displays $1.00 when cola is selected without adding money", () => {
         machine.selectProduct1();
@@ -271,12 +271,12 @@ describe("Return Coin", () => {
         machine.refund();
 
         machine.selectProduct2();
-    
+
         expect(dispenser.dispense2).toBeCalledTimes(0);
     });
- });
+});
 
- describe("Sold Out", () => {
+describe("Sold Out", () => {
     it("displays SOLD OUT when there are no chips", () => {
         dispenser.isTray2Empty = () => true;
 
@@ -295,7 +295,7 @@ describe("Return Coin", () => {
         expect(display).toHaveBeenCalledWith("SOLD OUT");
         expect(display).toHaveBeenLastCalledWith("$ 0.25");
     });
- });
+});
 
 function vendingMachine(display, coinMachine, dispenser) {
 
@@ -337,7 +337,7 @@ function vendingMachine(display, coinMachine, dispenser) {
         currentAmount = currentAmount - product.price;
         returnChange();
         product.tray();
-        setTimeout(() => display("INSERT COIN"), 3000);
+        askForMoreMoney();
     }
 
     function returnChange() {
@@ -351,6 +351,10 @@ function vendingMachine(display, coinMachine, dispenser) {
 
     function reject(price) {
         display(`PRICE ${formatAmount(price)}`);
+        askForMoreMoney();
+    }
+
+    function askForMoreMoney() {
         const message = currentAmount > 0
             ? formatAmount(currentAmount)
             : "INSERT COIN";
@@ -380,10 +384,7 @@ function vendingMachine(display, coinMachine, dispenser) {
         selectProduct2: () => {
             if (dispenser.isTray2Empty()) {
                 display("SOLD OUT");
-                const message = currentAmount > 0
-                ? formatAmount(currentAmount)
-                : "INSERT COIN";
-                setTimeout(() => display(message), 3000);
+                askForMoreMoney();
                 return;
             }
             const chips = {
