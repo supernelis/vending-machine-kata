@@ -349,16 +349,20 @@ function vendingMachine(display, coinMachine, dispenser) {
     function select(product) {
         if (product.isSoldOut()) {
             soldOut();
-        }else if (currentAmount >= product.price) {
+        } else if (isSufficientFunds(product)) {
             dispense(product);
         } else {
             reject(product.price);
         }
     }
 
-    function soldOut(){
+    function soldOut() {
         display("SOLD OUT");
         askForMoreMoney();
+    }
+
+    function isSufficientFunds(product) {
+        return currentAmount >= product.price;
     }
 
     function dispense(product) {
@@ -421,7 +425,7 @@ function vendingMachine(display, coinMachine, dispenser) {
         },
 
         selectProduct3: () => {
-           const candy = {
+            const candy = {
                 price: 65,
                 tray: dispenser.dispense3,
                 isSoldOut: dispenser.isTray3Empty
