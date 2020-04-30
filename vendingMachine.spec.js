@@ -261,8 +261,8 @@ describe("Return Coin", () => {
 
         machine.refund();
 
-        expect(coinMachine.refund).toHaveBeenCalledTimes(1)
-        expect(display).toHaveBeenLastCalledWith("INSERT COIN")
+        expect(coinMachine.refund).toHaveBeenCalledTimes(1);
+        expect(display).toHaveBeenLastCalledWith("INSERT COIN");
     });
 
     it("does not dispense chips when sufficient money is inserted and refunded", () => {
