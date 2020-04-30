@@ -24,6 +24,7 @@ beforeEach(() => {
         returnNickel: jest.fn(),
         refund: jest.fn()
     };
+    window.setTimeout = (callback) => callback();
     machine = vendingMachine(display, coinMachine, dispenser);
 });
 
@@ -72,9 +73,7 @@ describe("accept coin", () => {
     });
 });
 
-describe("Select product", () => {
-
-    window.setTimeout = (callback) => callback();
+describe("Select product", () => { 
 
     it("displays $1.00 when cola is selected without adding money", () => {
         machine.selectProduct1();
