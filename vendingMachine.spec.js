@@ -307,6 +307,16 @@ describe("Sold Out", () => {
         expect(display).toHaveBeenCalledWith("SOLD OUT");
         expect(display).toHaveBeenLastCalledWith("$ 0.25");
     });
+
+    it("displays SOLD OUT and already inserted amount when there are no candy", () => {
+        dispenser.isTray3Empty = () => true;
+        machine.insertCoin(quarterWeight);
+
+        machine.selectProduct3();
+
+        expect(display).toHaveBeenCalledWith("SOLD OUT");
+        expect(display).toHaveBeenLastCalledWith("$ 0.25");
+    });
 });
 
 function vendingMachine(display, coinMachine, dispenser) {
@@ -412,6 +422,11 @@ function vendingMachine(display, coinMachine, dispenser) {
         },
 
         selectProduct3: () => {
+            if (dispenser.isTray3Empty()) {
+                display("SOLD OUT");
+                askForMoreMoney();
+                return;
+            }
             const candy = {
                 price: 65,
                 tray: dispenser.dispense3
