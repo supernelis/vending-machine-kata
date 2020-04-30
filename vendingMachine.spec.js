@@ -20,7 +20,8 @@ beforeEach(() => {
         returnInserted: jest.fn(),
         returnQuarter: jest.fn(),
         returnDime: jest.fn(),
-        returnNickel: jest.fn()
+        returnNickel: jest.fn(),
+        refund: jest.fn()
     };
     machine = vendingMachine(display, coinMachine, dispenser);
 });
@@ -252,6 +253,19 @@ describe("Make change", () => {
     });
 });
 
+describe("Return Coin", () => {
+    it("returns the inserted money when the money return button is pressed", () => {
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(dimeWeight);
+        machine.insertCoin(nickelWeight);
+
+        machine.refund();
+
+        expect(coinMachine.refund).toHaveBeenCalledTimes(1)
+        expect(display).toHaveBeenLastCalledWith("INSERT COIN")
+    });
+ });
+
 function vendingMachine(display, coinMachine, dispenser) {
 
     const nickel = {
@@ -346,6 +360,11 @@ function vendingMachine(display, coinMachine, dispenser) {
                 tray: dispenser.dispense3
             };
             select(candy);
+        },
+
+        refund: () => {
+            coinMachine.refund();
+            display("INSERT COIN");
         }
     };
 }
