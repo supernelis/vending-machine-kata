@@ -53,3 +53,19 @@ Retro day3:
   * Less smooth? 3 minute forces switch does not work well for us.
   * Timer not visible?
   * Slow?
+
+Retro day4:
+
+* What did you learn?
+  * Never use float for currencies in Javascript +2
+  * xit
+  * refactoring while loop (understand most logical place to put things)
+  * Look for extendable design for currencies while loop (and not stop), power of MOB
+
+* What went well?
+  * Three minutes: worked well, forced to follow the design +2
+  * Smoother
+  * Discussion about how the vending machine should work (good discussing, but not to much discussion)
+
+* What did not go well?
+  * vscode ...
