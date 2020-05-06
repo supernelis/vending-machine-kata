@@ -24,7 +24,8 @@ beforeEach(() => {
         returnQuarter: jest.fn(),
         returnDime: jest.fn(),
         returnNickel: jest.fn(),
-        refund: jest.fn()
+        refund: jest.fn(),
+        isEmpty: () => false
     };
     window.setTimeout = (callback) => callback();
     machine = vendingMachine(display, coinMachine, dispenser);
@@ -319,6 +320,16 @@ describe("Sold Out", () => {
     });
 });
 
+describe("Exact change", () => {
+    it("displays EXACT CHANGE ONLY when the machine is not able to give back change", () => {
+        coinMachine.isEmpty = () => true;
+
+        machine.selectProduct1();
+
+        expect(display).toHaveBeenCalledWith("EXACT CHANGE ONLY");
+    });
+});
+
 function vendingMachine(display, coinMachine, dispenser) {
 
     const nickel = {
@@ -388,9 +399,12 @@ function vendingMachine(display, coinMachine, dispenser) {
     }
 
     function askForMoreMoney() {
-        const message = currentAmount > 0
+        let message = currentAmount > 0
             ? formatAmount(currentAmount)
             : "INSERT COIN";
+        if (message === "INSERT COIN" && coinMachine.isEmpty()){
+            message = "EXACT CHANGE ONLY";
+        }
         setTimeout(() => display(message), 3000);
     }
 
