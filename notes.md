@@ -83,3 +83,17 @@ Retro day 5:
 
 * What did not go well?
   * vscode ...
+
+Retro day 6:
+
+* What did I learn
+  * Plugins for Vim + shortcuts +1
+  * TMux setup, went quit fast +1
+  * Ngrok +1
+
+* What went well?
+  * User experience with two panes is better then terminals in vscode +1
+  * No problem with following or switching +2
+* What went less well
+  * A bit smaller for TMUX
+  * Lag (very small), because of ngrok?
