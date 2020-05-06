@@ -13,15 +13,20 @@ beforeEach(() => {
     dispenser = {
         dispense1: jest.fn(),
         dispense2: jest.fn(),
-        dispense3: jest.fn()
+        dispense3: jest.fn(),
+        isTray1Empty: () => false,
+        isTray2Empty: () => false,
+        isTray3Empty: () => false
     };
     display = jest.fn();
     coinMachine = {
         returnInserted: jest.fn(),
         returnQuarter: jest.fn(),
         returnDime: jest.fn(),
-        returnNickel: jest.fn()
+        returnNickel: jest.fn(),
+        refund: jest.fn()
     };
+    window.setTimeout = (callback) => callback();
     machine = vendingMachine(display, coinMachine, dispenser);
 });
 
@@ -71,8 +76,6 @@ describe("accept coin", () => {
 });
 
 describe("Select product", () => {
-
-    window.setTimeout = (callback) => callback();
 
     it("displays $1.00 when cola is selected without adding money", () => {
         machine.selectProduct1();
@@ -252,6 +255,70 @@ describe("Make change", () => {
     });
 });
 
+describe("Return Coin", () => {
+    it("returns the inserted money when the money return button is pressed", () => {
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(dimeWeight);
+        machine.insertCoin(nickelWeight);
+
+        machine.refund();
+
+        expect(coinMachine.refund).toHaveBeenCalledTimes(1);
+        expect(display).toHaveBeenLastCalledWith("INSERT COIN");
+    });
+
+    it("does not dispense chips when sufficient money is inserted and refunded", () => {
+        machine.insertCoin(quarterWeight);
+        machine.insertCoin(quarterWeight);
+        machine.refund();
+
+        machine.selectProduct2();
+
+        expect(dispenser.dispense2).toBeCalledTimes(0);
+    });
+});
+
+describe("Sold Out", () => {
+    it("displays SOLD OUT when there are no chips", () => {
+        dispenser.isTray2Empty = () => true;
+
+        machine.selectProduct2();
+
+        expect(display).toHaveBeenCalledWith("SOLD OUT");
+        expect(display).toHaveBeenLastCalledWith("INSERT COIN");
+    });
+
+    it("displays SOLD OUT and already inserted amount when there are no chips", () => {
+        dispenser.isTray2Empty = () => true;
+        machine.insertCoin(quarterWeight);
+
+        machine.selectProduct2();
+
+        expect(display).toHaveBeenCalledWith("SOLD OUT");
+        expect(display).toHaveBeenLastCalledWith("$ 0.25");
+    });
+
+    it("displays SOLD OUT and already inserted amount when there are no coke", () => {
+        dispenser.isTray1Empty = () => true;
+        machine.insertCoin(quarterWeight);
+
+        machine.selectProduct1();
+
+        expect(display).toHaveBeenCalledWith("SOLD OUT");
+        expect(display).toHaveBeenLastCalledWith("$ 0.25");
+    });
+
+    it("displays SOLD OUT and already inserted amount when there are no candy", () => {
+        dispenser.isTray3Empty = () => true;
+        machine.insertCoin(quarterWeight);
+
+        machine.selectProduct3();
+
+        expect(display).toHaveBeenCalledWith("SOLD OUT");
+        expect(display).toHaveBeenLastCalledWith("$ 0.25");
+    });
+});
+
 function vendingMachine(display, coinMachine, dispenser) {
 
     const nickel = {
@@ -280,11 +347,22 @@ function vendingMachine(display, coinMachine, dispenser) {
     let currentAmount = 0;
 
     function select(product) {
-        if (currentAmount >= product.price) {
+        if (product.isSoldOut()) {
+            soldOut();
+        } else if (isSufficientFunds(product)) {
             dispense(product);
         } else {
             reject(product.price);
         }
+    }
+
+    function soldOut() {
+        display("SOLD OUT");
+        askForMoreMoney();
+    }
+
+    function isSufficientFunds(product) {
+        return currentAmount >= product.price;
     }
 
     function dispense(product) {
@@ -292,7 +370,7 @@ function vendingMachine(display, coinMachine, dispenser) {
         currentAmount = currentAmount - product.price;
         returnChange();
         product.tray();
-        setTimeout(() => display("INSERT COIN"), 3000);
+        askForMoreMoney();
     }
 
     function returnChange() {
@@ -306,6 +384,10 @@ function vendingMachine(display, coinMachine, dispenser) {
 
     function reject(price) {
         display(`PRICE ${formatAmount(price)}`);
+        askForMoreMoney();
+    }
+
+    function askForMoreMoney() {
         const message = currentAmount > 0
             ? formatAmount(currentAmount)
             : "INSERT COIN";
@@ -327,7 +409,8 @@ function vendingMachine(display, coinMachine, dispenser) {
         selectProduct1: () => {
             const cola = {
                 price: 100,
-                tray: dispenser.dispense1
+                tray: dispenser.dispense1,
+                isSoldOut: dispenser.isTray1Empty
             };
             select(cola);
         },
@@ -335,7 +418,8 @@ function vendingMachine(display, coinMachine, dispenser) {
         selectProduct2: () => {
             const chips = {
                 price: 50,
-                tray: dispenser.dispense2
+                tray: dispenser.dispense2,
+                isSoldOut: dispenser.isTray2Empty
             };
             select(chips);
         },
@@ -343,9 +427,16 @@ function vendingMachine(display, coinMachine, dispenser) {
         selectProduct3: () => {
             const candy = {
                 price: 65,
-                tray: dispenser.dispense3
+                tray: dispenser.dispense3,
+                isSoldOut: dispenser.isTray3Empty
             };
             select(candy);
+        },
+
+        refund: () => {
+            coinMachine.refund();
+            currentAmount = 0;
+            display("INSERT COIN");
         }
     };
 }

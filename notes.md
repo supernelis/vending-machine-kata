@@ -5,7 +5,7 @@ Nickel = 5g
 Dime = 2.268 g
 Quarter = 5.670 g
 
-Retro day1:
+Retro day 1:
 
 * What did you learn?
 
@@ -23,7 +23,7 @@ Retro day1:
   * Small MOB works very well (3)
   * Not to strict roles, but still kept (for small MOB)
 
-Retro day2:
+Retro day 2:
 
 * What did you learn?
   * Git command refresh +1
@@ -36,7 +36,7 @@ Retro day2:
   * Refactoring phase -> discuss approaches and then try one, small discussions
   * Discussions are good
 
-Retro day3:
+Retro day 3:
 
 * What did you learn?
   * Possible to refactor from class to function in small steps
@@ -54,7 +54,21 @@ Retro day3:
   * Timer not visible?
   * Slow?
 
-Retro day4:
+Retro day 4:
+
+* What did you learn?
+  * Liveshare sucks
+  * More routine, no new constructs +2
+  * Not pass by accident +1
+
+* What went well?
+  * 3 minutes still worked +2
+  * Trying to have the same level of abstraction +1
+  
+* What did not go well?
+  * Less concentrated
+
+Retro day 5:
 
 * What did you learn?
   * Never use float for currencies in Javascript +2
